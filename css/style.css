@@ -1,0 +1,18 @@
+/*main styles*/
+html,body{
+    font-family: 'Exo', sans-serif;
+    box-sizing: border-box;
+}
+
+
+
+
+/*labels styles*/
+.mainBody{
+    margin-top: 50px;
+}
+.mainBody .container .row div p{
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+}
