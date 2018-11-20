@@ -28,8 +28,6 @@ function createInstructionHash() {
 createInstructionHash();
 
 
-
-
 document.body.onload = function () {
     $(".addBtn").on("click", function () {
         $("tbody").append("<tr>\n" +
@@ -53,7 +51,6 @@ document.body.onload = function () {
         var startAddressValue = $("#Start").val();
         var hexRegex = new RegExp("^[A-Fa-f0-9]");
         var varRegex = new RegExp("^[A-Za-z0-9]+$");
-
         if(!hexRegex.test(startAddressValue)){
             $("#Start").css("border-color","#d9534f");
         } else{
@@ -86,3 +83,14 @@ document.body.onload = function () {
     });
 
 }
+
+
+// this code to itrate row by row
+/*
+    $("tbody tr").each(function(){
+        $(this).find('td').each(function(){
+            console.log($(this));
+        });
+        console.log("_________________________________");
+    });
+*/
