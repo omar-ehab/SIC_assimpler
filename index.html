@@ -18,11 +18,22 @@
     
     <section class="mainBody">
         <div class="container">
+            <div class="row xAndStart">
+                <!--<div class="col">-->
+                    <!--<label for="xRegister">Register X Value</label>-->
+                    <!--<input type="text" class="form-control" id="xRegister">-->
+                <!--</div>-->
+                <div class="col-md-6">
+                    <label for="Start">Start Address Value <span style="color: #d9534f;" >(type it in Hex)</span></label>
+                    <input type="text" class="form-control" id="Start">
+                </div>
+            </div>
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">Variable</th>
                     <th scope="col">Instruction</th>
+                    <th scope="col">X</th>
                     <th scope="col">Address</th>
                     <th scope="col">
                         <button class="btn btn-primary addBtn">
@@ -35,6 +46,12 @@
                 <tr>
                     <td><input type="text" class="form-control var" required></td>
                     <td><input type="text" class="form-control ins" required></td>
+                    <td>
+                        <select class="form-control">
+                            <option value="0" selected>0</option>
+                            <option value="1">1</option>
+                        </select>
+                    </td>
                     <td><input type="text" class="form-control address" required></td>
                 </tr>
                 </tbody>
