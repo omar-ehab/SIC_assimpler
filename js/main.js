@@ -1,4 +1,11 @@
 const instruction   = {};
+var addresses = [],
+    A,
+    X,
+    L,
+    PC,
+    SW,
+    Memory;
 function createInstructionHash() {
     instruction["ADD"]  = "18";
     instruction["AND"]  = "40";
@@ -24,6 +31,10 @@ function createInstructionHash() {
     instruction["SUB"]  = "1C";
     instruction["TD"]   = "E0";
     instruction["TIX"]  = "2C";
+    instruction["WORD"] = "";
+    instruction["BYTE"] = "";
+    instruction["RESW"] = "";
+    instruction["RESB"] = "";
 };
 createInstructionHash();
 
@@ -45,19 +56,20 @@ document.body.onload = function () {
             "</button></td>" +
             "                </tr>");
     });
+
     $(".submit").on("click", function (e) {
         e.preventDefault();
         console.log($(".var").length);
         var startAddressValue = $("#Start").val();
-        var hexRegex = new RegExp("^[A-Fa-f0-9]");
-        var varRegex = new RegExp("^[A-Za-z0-9]+$");
-        if(!hexRegex.test(startAddressValue)){
+        var emptyRegex = new RegExp("^$");
+        var varRegex = new RegExp("^[A-Za-z0-9 ]+$");
+        if(!varRegex.test(startAddressValue)){
             $("#Start").css("border-color","#d9534f");
         } else{
             $("#Start").css("border-color","#ced4da");
         }
         $(".var").each(function (index, val) {
-            if(varRegex.test(val.value)){
+            if(varRegex.test(val.value) || emptyRegex.test(val.value)){
                 val.style.borderColor = "#ced4da";
                 console.log("Variable true");
             } else {
@@ -85,7 +97,7 @@ document.body.onload = function () {
 }
 
 
-// this code to itrate row by row
+// this code to iterates row by row
 /*
     $("tbody tr").each(function(){
         $(this).find('td').each(function(){
