@@ -22,3 +22,9 @@ html,body{
 .table-responsive {
     display: table;
 }
+.code{
+    margin-bottom: 100px;
+}
+.symbol{
+    display: none;
+}
