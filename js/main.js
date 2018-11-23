@@ -1,4 +1,5 @@
 var addresses = [],
+    symbolTabel = [],
     A,
     X,
     L,
@@ -61,9 +62,11 @@ document.body.onload = function () {
 
     $(".submit").on("click", function (e) {
         e.preventDefault();
+        $(this).hide();
         var startAddressValue = $("#Start").val(),
             emptyRegex = new RegExp("^$"),
             varRegex = new RegExp("^[A-Za-z0-9' ]+$");
+        addresses[0] = startAddressValue;
         if (!varRegex.test(startAddressValue)) {
             $("#Start").css("border-color", "#d9534f");
         } else {
@@ -72,27 +75,58 @@ document.body.onload = function () {
         $(".var").each(function (index, val) {
             if (varRegex.test(val.value) || emptyRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
-                console.log("Variable true");
+                //console.log("Variable true");
             } else {
                 val.style.borderColor = "#d9534f";
             }
         });
         $(".inst").each(function (index, val) {
+
             if (instruction[val.value] !== undefined) {
                 val.style.borderColor = "#ced4da";
-                console.log("Instruction true");
+                if (val.value != "BYTE" && val.value != "RESW" && val.value != "RESB") {
+                    addresses[index + 1] = hexAdd(addresses[index], "3");
+                    if ($(".var").eq(index).val() != "") {
+                        symbolTabel[$(".var").eq(index).val()] = addresses[index];
+                    }
+                } else if (val.value === "BYTE") {
+                    var byteLength = (($(".address").eq(index).val().length) - 3).toString(16);
+                    addresses[index + 1] = hexAdd(addresses[index], byteLength);
+                    if ($(".var").eq(index).val() != "") {
+                        symbolTabel[$(".var").eq(index).val()] = addresses[index];
+                    }
+                } else if (val.value === "RESW") {
+                    var reswLength = ($(".address").eq(index).val()*3).toString(16);
+                    addresses[index + 1] = hexAdd(addresses[index], reswLength);
+                    if ($(".var").eq(index).val() != "") {
+                        symbolTabel[$(".var").eq(index).val()] = addresses[index];
+                    }
+                } else if (val.value === "RESB"){
+                    var resbLength = ($(".address").eq(index).val()*1).toString(16);
+                    addresses[index + 1] = hexAdd(addresses[index], resbLength);
+                    if ($(".var").eq(index).val() != "") {
+                        symbolTabel[$(".var").eq(index).val()] = addresses[index];
+                    }
+                }
             } else {
                 val.style.borderColor = "#d9534f";
             }
         });
+        for(var i = 0; i < addresses.length-1; i++){
+            console.log(addresses[i]);
+        }
+        for(i in symbolTabel) {
+            console.log(i +"     "+symbolTabel[i]);
+        }
         $(".address").each(function (index, val) {
             if (varRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
-                console.log("Address true");
+                //console.log("Address true");
             } else {
                 val.style.borderColor = "#d9534f";
             }
         });
+        //here we will ADD Symbol table
     });
 
 };

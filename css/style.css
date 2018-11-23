@@ -9,7 +9,7 @@ html,body{
 
 /*labels styles*/
 .mainBody{
-    margin-top: 50px;
+    margin: 50px 0;
 }
 .mainBody .container .row div p{
     text-align: center;
