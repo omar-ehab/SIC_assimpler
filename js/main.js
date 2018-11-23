@@ -1,4 +1,3 @@
-const instruction   = {};
 var addresses = [],
     A,
     X,
@@ -6,7 +5,9 @@ var addresses = [],
     PC,
     SW,
     Memory;
+var instruction   = {};
 function createInstructionHash() {
+    "use strict";
     instruction["ADD"]  = "18";
     instruction["AND"]  = "40";
     instruction["COMP"] = "28";
@@ -35,11 +36,12 @@ function createInstructionHash() {
     instruction["BYTE"] = "";
     instruction["RESW"] = "";
     instruction["RESB"] = "";
-};
+}
 createInstructionHash();
 
 
 document.body.onload = function () {
+    "use strict";
     $(".addBtn").on("click", function () {
         $("tbody").append("<tr>\n" +
             "                    <td><input type=\"text\" class=\"form-control var\" required></td>\n" +
@@ -51,7 +53,7 @@ document.body.onload = function () {
             "                        </select>\n" +
             "                    </td>\n" +
             "                    <td><input type=\"text\" class=\"form-control address\" required></td>\n" +
-            "<td><button class=\"btn btn-danger rmvBtn\" onclick=\"deleteParent()\"> "+
+            "<td><button class=\"btn btn-danger rmvBtn\" onclick=\"deleteParent()\"> " +
             "   <i class=\"fa fa-times\"></i>" +
             "</button></td>" +
             "                </tr>");
@@ -59,17 +61,16 @@ document.body.onload = function () {
 
     $(".submit").on("click", function (e) {
         e.preventDefault();
-        console.log($(".var").length);
-        var startAddressValue = $("#Start").val();
-        var emptyRegex = new RegExp("^$");
-        var varRegex = new RegExp("^[A-Za-z0-9 ]+$");
-        if(!varRegex.test(startAddressValue)){
-            $("#Start").css("border-color","#d9534f");
-        } else{
-            $("#Start").css("border-color","#ced4da");
+        var startAddressValue = $("#Start").val(),
+            emptyRegex = new RegExp("^$"),
+            varRegex = new RegExp("^[A-Za-z0-9' ]+$");
+        if (!varRegex.test(startAddressValue)) {
+            $("#Start").css("border-color", "#d9534f");
+        } else {
+            $("#Start").css("border-color", "#ced4da");
         }
         $(".var").each(function (index, val) {
-            if(varRegex.test(val.value) || emptyRegex.test(val.value)){
+            if (varRegex.test(val.value) || emptyRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
                 console.log("Variable true");
             } else {
@@ -77,7 +78,7 @@ document.body.onload = function () {
             }
         });
         $(".ins").each(function (index, val) {
-            if(instruction[val.value] !== undefined){
+            if (instruction[val.value] !== undefined) {
                 val.style.borderColor = "#ced4da";
                 console.log("Instruction true");
             } else {
@@ -85,7 +86,7 @@ document.body.onload = function () {
             }
         });
         $(".address").each(function (index, val) {
-            if(varRegex.test(val.value)) {
+            if (varRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
                 console.log("Address true");
             } else {
@@ -94,7 +95,7 @@ document.body.onload = function () {
         });
     });
 
-}
+};
 
 
 // this code to iterates row by row
