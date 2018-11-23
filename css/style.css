@@ -19,3 +19,6 @@ html,body{
 .xAndStart{
     margin-bottom: 30px;
 }
+.table-responsive {
+    display: table;
+}

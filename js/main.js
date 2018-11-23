@@ -45,7 +45,7 @@ document.body.onload = function () {
     $(".addBtn").on("click", function () {
         $("tbody").append("<tr>\n" +
             "                    <td><input type=\"text\" class=\"form-control var\" required></td>\n" +
-            "                    <td><input type=\"text\" class=\"form-control ins\" required></td>\n" +
+            "                    <td><input type=\"text\" class=\"form-control inst\" required></td>\n" +
             "                    <td>\n" +
             "                        <select class=\"form-control\">\n" +
             "                            <option value=\"0\" selected>0</option>\n" +
@@ -77,7 +77,7 @@ document.body.onload = function () {
                 val.style.borderColor = "#d9534f";
             }
         });
-        $(".ins").each(function (index, val) {
+        $(".inst").each(function (index, val) {
             if (instruction[val.value] !== undefined) {
                 val.style.borderColor = "#ced4da";
                 console.log("Instruction true");
@@ -96,6 +96,11 @@ document.body.onload = function () {
     });
 
 };
+
+function hexAdd(num1, num2) {
+    var answer = parseInt(num1, 16) + parseInt(num2, 16);
+    return answer.toString(16);
+}
 
 
 // this code to iterates row by row
