@@ -5,7 +5,7 @@ var addresses = [],
     PC,
     SW,
     Memory;
-var instruction   = {};
+const instruction   = {};
 function createInstructionHash() {
     "use strict";
     instruction["ADD"]  = "18";
