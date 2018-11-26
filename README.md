@@ -1,1 +1,1 @@
-# SIC_assimpler
+# SIC_assimpler with javascript
