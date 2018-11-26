@@ -1,11 +1,8 @@
 var addresses = [],
     symbolTabel = [],
-    A,
-    X,
-    L,
-    PC,
-    SW,
-    Memory;
+    obcode,
+    x,
+    addressOfVar;
 const instruction   = {};
 // this method create HashTable of Instructions
 function createInstructionHash() {
@@ -50,7 +47,7 @@ document.body.onload = function () {
             "                    <td><input type=\"text\" class=\"form-control var\" required></td>\n" +
             "                    <td><input type=\"text\" class=\"form-control inst\" required></td>\n" +
             "                    <td>\n" +
-            "                        <select class=\"form-control\">\n" +
+            "                        <select class=\"form-control select\">\n" +
             "                            <option value=\"0\" selected>0</option>\n" +
             "                            <option value=\"1\">1</option>\n" +
             "                        </select>\n" +
@@ -59,6 +56,7 @@ document.body.onload = function () {
             "<td><button class=\"btn btn-danger rmvBtn\" onclick=\"deleteParent()\"> " +
             "   <i class=\"fa fa-times\"></i>" +
             "</button></td>" +
+            "<td class=\"obCode\"></td>" +
             "                </tr>");
     });
 
@@ -124,10 +122,29 @@ document.body.onload = function () {
             }
         });
 
-        for (var i = 0; i < addresses.length - 1; i++) {
-            console.log(addresses[i]);
-        }
+        $(".inst").each(function (index, val) {
+            if(instruction[val.value] != undefined) {
+                obcode = instruction[val.value];
+                x = parseInt($(".select").eq(index).val());
+                console.log("x="+x);
+                addressOfVar = symbolTabel[$(".address").eq(index).val()];
+                if(x == 1){
+                    console.log("AddressOfVar"+addressOfVar);
+                    console.log("1st = "+addressOfVar[0]);
+                    var answer = hexAdd(addressOfVar[0],"8");
+                    console.log("answer = "+answer);
+                    addressOfVar = addressOfVar.replace(addressOfVar[0], answer);
+                    obcode += addressOfVar;
+                    $(".obCode").eq(index).append(obcode);
+                }
+            }
+        });
 
+         $(".code thead tr").prepend("<th scope=\"col\">Location</th>");
+
+         $(".code tbody tr").each(function (index, val) {
+             val.prepend(addresses[index]);
+         });
 
         $(".address").each(function (index, val) {
             if (varRegex.test(val.value)) {
@@ -138,7 +155,7 @@ document.body.onload = function () {
             }
         });
 
-
+        var i;
         for (i in symbolTabel) {
             $(".symbol tbody").append("<tr>\n" +
                 "                    <td>"+i+"</td>\n" +
@@ -155,16 +172,10 @@ function hexAdd(num1, num2) {
     return answer.toString(16);
 }
 
-
-
-
-
-// this code to iterates row by row
 /*
-    $("tbody tr").each(function(){
-        $(this).find('td').each(function(){
-            console.log($(this));
-        });
-        console.log("_________________________________");
+$(".code tbody tr").each(function(){
+    $(this).find('td').each(function(){
+        console.log($(this));
     });
-*/
+    console.log("_________________________________");
+});*/
