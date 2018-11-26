@@ -7,6 +7,7 @@ var addresses = [],
     SW,
     Memory;
 const instruction   = {};
+// this method create HashTable of Instructions
 function createInstructionHash() {
     "use strict";
     instruction["ADD"]  = "18";
@@ -40,9 +41,10 @@ function createInstructionHash() {
 }
 createInstructionHash();
 
-
+//all this code in this function will run after page load
 document.body.onload = function () {
     "use strict";
+    //this event handel new row addition
     $(".addBtn").on("click", function () {
         $(".code tbody").append("<tr>\n" +
             "                    <td><input type=\"text\" class=\"form-control var\" required></td>\n" +
@@ -60,12 +62,18 @@ document.body.onload = function () {
             "                </tr>");
     });
 
+    //this event handle convert from SIC code to object code
     $(".submit").on("click", function (e) {
+        //prevent button behavior
         e.preventDefault();
+        //hide compile button
         $(this).hide();
+        //show object code
         $(".symbol").toggle();
         var startAddressValue = $("#Start").val(),
+            //Regular expression to check empty string
             emptyRegex = new RegExp("^$"),
+            //Regular Expression to check only string and numbers
             varRegex = new RegExp("^[A-Za-z0-9' ]+$");
         addresses[0] = startAddressValue;
         if (!varRegex.test(startAddressValue)) {
@@ -73,6 +81,7 @@ document.body.onload = function () {
         } else {
             $("#Start").css("border-color", "#ced4da");
         }
+
         $(".var").each(function (index, val) {
             if (varRegex.test(val.value) || emptyRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
@@ -81,6 +90,7 @@ document.body.onload = function () {
                 val.style.borderColor = "#d9534f";
             }
         });
+
         $(".inst").each(function (index, val) {
 
             if (instruction[val.value] !== undefined) {
@@ -113,9 +123,12 @@ document.body.onload = function () {
                 val.style.borderColor = "#d9534f";
             }
         });
+
         for (var i = 0; i < addresses.length - 1; i++) {
             console.log(addresses[i]);
         }
+
+
         $(".address").each(function (index, val) {
             if (varRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
@@ -136,10 +149,14 @@ document.body.onload = function () {
     });
 };
 
+//this method add two hex numbers and return the result of addition
 function hexAdd(num1, num2) {
     var answer = parseInt(num1, 16) + parseInt(num2, 16);
     return answer.toString(16);
 }
+
+
+
 
 
 // this code to iterates row by row
