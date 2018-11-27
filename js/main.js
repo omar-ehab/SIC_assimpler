@@ -4,6 +4,7 @@ var addresses = [],
     x,
     addressOfVar;
 const instruction   = {};
+
 // this method create HashTable of Instructions
 function createInstructionHash() {
     "use strict";
@@ -76,6 +77,8 @@ document.body.onload = function () {
         addresses[0] = startAddressValue;
         if (!varRegex.test(startAddressValue)) {
             $("#Start").css("border-color", "#d9534f");
+            alert("Something Wrong!\nPlease Refresh page and type Correct SIC assembly Code!");
+            window.location.reload();
         } else {
             $("#Start").css("border-color", "#ced4da");
         }
@@ -83,9 +86,10 @@ document.body.onload = function () {
         $(".var").each(function (index, val) {
             if (varRegex.test(val.value) || emptyRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
-                //console.log("Variable true");
             } else {
                 val.style.borderColor = "#d9534f";
+                alert("Something Wrong!\nPlease Refresh page and type Correct SIC assembly Code!");
+                window.location.reload();
             }
         });
 
@@ -119,6 +123,8 @@ document.body.onload = function () {
                 }
             } else {
                 val.style.borderColor = "#d9534f";
+                alert("Something Wrong!\nPlease Refresh page and type Correct SIC assembly Code!");
+                window.location.reload();
             }
         });
 
@@ -126,17 +132,22 @@ document.body.onload = function () {
             if(instruction[val.value] != undefined) {
                 obcode = instruction[val.value];
                 x = parseInt($(".select").eq(index).val());
-                console.log("x="+x);
                 addressOfVar = symbolTabel[$(".address").eq(index).val()];
-                if(x == 1){
-                    console.log("AddressOfVar"+addressOfVar);
-                    console.log("1st = "+addressOfVar[0]);
-                    var answer = hexAdd(addressOfVar[0],"8");
-                    console.log("answer = "+answer);
-                    addressOfVar = addressOfVar.replace(addressOfVar[0], answer);
-                    obcode += addressOfVar;
-                    $(".obCode").eq(index).append(obcode);
+                if(val.value != "BYTE" && val.value != "RESW" && val.value != "RESB" && val.value !="WORD") {
+                    if(x == 1){
+                        var answer = hexAdd(addressOfVar[0],"8");
+                        addressOfVar = addressOfVar.replace(addressOfVar[0], answer);
+                        obcode += addressOfVar;
+                        $(".obCode").eq(index).append(obcode);
+                    } else {
+                        obcode += addressOfVar;
+                        $(".obCode").eq(index).append(obcode);
+
+                    }
                 }
+            } else {
+                alert("Something Wrong!\nPlease Refresh page and type Correct SIC assembly Code!");
+                window.location.reload();
             }
         });
 
@@ -149,9 +160,10 @@ document.body.onload = function () {
         $(".address").each(function (index, val) {
             if (varRegex.test(val.value)) {
                 val.style.borderColor = "#ced4da";
-                //console.log("Address true");
             } else {
                 val.style.borderColor = "#d9534f";
+                alert("Something Wrong!\nPlease Refresh page and type Correct SIC assembly Code!");
+                window.location.reload();
             }
         });
 
@@ -171,11 +183,3 @@ function hexAdd(num1, num2) {
     var answer = parseInt(num1, 16) + parseInt(num2, 16);
     return answer.toString(16);
 }
-
-/*
-$(".code tbody tr").each(function(){
-    $(this).find('td').each(function(){
-        console.log($(this));
-    });
-    console.log("_________________________________");
-});*/
